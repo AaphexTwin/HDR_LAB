@@ -1,0 +1,6 @@
+/result.png
+/output/*
+!/output/opencv_matched_result.png
+/input1/
+/report/
+/result_OpenCV/
