@@ -14,7 +14,7 @@ func weight(z uint8) float64 {
 	return float64(255 - z)
 }
 
-func solveResponse(samples [][3]uint8, logExposureTimes []float64, lambda float64) []float64 {
+func solveResponse(samples [][]uint8, logExposureTimes []float64, lambda float64) []float64 {
 	var rows [][]float64
 	var rightSides []float64
 
@@ -86,7 +86,7 @@ func solveResponse(samples [][3]uint8, logExposureTimes []float64, lambda float6
 	return curve
 }
 
-func estimateLogE(values [3]uint8, curve []float64, logTimes []float64) float64 {
+func estimateLogE(values []uint8, curve []float64, logTimes []float64) float64 {
 	var sum, sumWeights float64
 	for j, z := range values {
 		w := weight(z)
@@ -95,7 +95,8 @@ func estimateLogE(values [3]uint8, curve []float64, logTimes []float64) float64 
 	}
 
 	if sumWeights == 0 {
-		return curve[values[1]] - logTimes[1]
+		middle := len(values) / 2
+		return curve[values[middle]] - logTimes[middle]
 	}
 	return sum / sumWeights
 }
